@@ -1,36 +1,15 @@
 # aoc
 
-FIXME: description
-
-## Installation
-
-Download from http://example.com/FIXME.
+Personal [Advent of Code](https://adventofcode.com) solutions in Clojure
 
 ## Usage
 
-FIXME: explanation
-
-    $ java -jar aoc-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+1. Fire up a repl using the `lein uberjar` profile.
+2. Evaluate the solution files. Final solutions should be def'd.
 
 ## License
 
-Copyright © 2022 FIXME
+Copyright © 2022 Greg Mitchell
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
