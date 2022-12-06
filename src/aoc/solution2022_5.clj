@@ -110,11 +110,11 @@
         to (dec to)
         from-stack (nth stacks from)
         remaining-item-count (- (count from-stack) move-count)
-        _ (println remaining-item-count)
+        ;_ (println remaining-item-count)
         items (drop remaining-item-count from-stack)
         from-stack (take remaining-item-count from-stack)
         to-stack (concat (nth stacks to) items)
-        _ (println "items" items "from" from-stack "to" to-stack)
+        ;_ (println "items" items "from" from-stack "to" to-stack)
         with-updated-from (assoc-in stacks [from] from-stack)
         updated-stack (assoc-in with-updated-from [to] to-stack)]
     updated-stack))
