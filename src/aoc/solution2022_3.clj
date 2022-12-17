@@ -3,9 +3,11 @@
             [clojure.string :as s]
             [clojure.set :as set]))
 
-(def input-file (io/resource "2022/3/input.txt"))
-(def input-lines
+(def input-file "2022/3/input.txt")
+(defn input-lines 
+  []
   (-> input-file
+      io/resource
       slurp
       s/split-lines))
 
@@ -16,7 +18,9 @@
         compartment2 (drop (/ item-count 2) line)]
     {:1 compartment1 :2 compartment2}))
 
-(def rucksacks (map parse-rucksack input-lines))
+(defn rucksacks 
+  [lines]
+  (map parse-rucksack lines))
 
 (defn common-items-in-rucksack
   [rucksack]
@@ -27,7 +31,8 @@
       (first common)
       (throw (Exception. "multiple common items")))))
 
-(def common-items
+(defn common-items
+  [rucksacks]
   (map common-items-in-rucksack rucksacks))
 
 (defn to-priority
@@ -40,10 +45,12 @@
     ;; (int \A) => 65
     (+ (- (int item) 64) 26)))
 
-(def priority-sum
+(defn priority-sum
+  [common-items]
   (->> common-items (map to-priority) (apply +)))
 
-(def groups
+(defn groups
+  [rucksacks]
   (partition 3 rucksacks))
 
 (defn find-badge
@@ -58,8 +65,6 @@
       (first badge-set)
       (throw (Exception. "multiple badges")))))
 
-(def group-badges
-  (map find-badge groups))
-
-(def badge-priority-sum
-  (->> group-badges (map to-priority) (apply +)))
+(defn badge-priority-sum
+  [groups] 
+  (->> groups (map find-badge) (map to-priority) (apply +)))

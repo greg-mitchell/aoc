@@ -2,9 +2,11 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as s]))
 
-(def input-file (io/resource "2022/5/input.txt"))
-(def input-lines
+(def input-file "2022/5/input.txt")
+(defn input-lines
+  []
   (-> input-file
+      io/resource
       slurp
       s/split-lines))
 
@@ -25,9 +27,10 @@
       last
       (Integer/parseInt)))
 
-(def stack-info
+(defn stack-info
+  [lines]
   "number of stacks there are and problem metadata"
-  (let [stack-line (find-stacks-line input-lines)]
+  (let [stack-line (find-stacks-line lines)]
     {:stack-count (parse-stack-count stack-line)
      :max-depth (first stack-line)}))
 
@@ -45,11 +48,13 @@
                     (range stack-count))]
     (into [] stacks)))
 
-(def stacks
-  (build-stacks stack-info input-lines))
+(defn stacks
+  [lines]
+  (build-stacks stack-info lines))
 
-(def procedure-lines
-  (drop (+ 2 (:max-depth stack-info)) input-lines))
+(defn procedure-lines
+  [lines]
+  (drop (+ 2 (:max-depth stack-info)) lines))
 
 (defn parse-procedure-steps
   [line]
@@ -61,7 +66,8 @@
        :from (nth matches 1)
        :to (nth matches 2)})))
 
-(def procedure
+(defn procedure
+  [procedure-lines]
   (map parse-procedure-steps procedure-lines))
 
 (defn apply-step
@@ -94,10 +100,12 @@
       (recur (step-fn stacks (first steps))
              (rest steps)))))
 
-(def final-stacks
+(defn final-stacks
+  [procedure stacks]
   (apply-procedure apply-step stacks procedure))
 
-(def tops
+(defn tops
+  [final-stacks]
   (->> final-stacks
        (map last)
        (apply str)))
@@ -119,10 +127,13 @@
         updated-stack (assoc-in with-updated-from [to] to-stack)]
     updated-stack))
 
-(def final-stacks2
+(defn final-stacks2
+  [procedure stacks]
   (apply-procedure apply-step2 stacks procedure))
 
-(def tops2
-  (->> final-stacks2
-       (map last)
-       (apply str)))
+#_(def tops2
+  (let [lines (input-lines)
+        stack-info (stack-info lines)
+        stacks (build-stacks stack-info lines)
+        procedure (procedure (procedure-lines lines))]
+    (tops (final-stacks2 procedure stacks))))

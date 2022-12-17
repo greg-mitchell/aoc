@@ -2,9 +2,10 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as s]))
 
-(def input-file (io/resource "2022/1/input.txt"))
-(def input-lines 
+(def input-file "2022/1/input.txt")
+(defn input-lines []
   (-> input-file
+      io/resource
       slurp 
       s/split-lines))
 

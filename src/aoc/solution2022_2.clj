@@ -2,9 +2,10 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as s]))
 
-(def input-file (io/resource "2022/2/input.txt"))
-(def input-lines
+(def input-file "2022/2/input.txt")
+(defn input-lines []
   (-> input-file
+      io/resource
       slurp
       s/split-lines))
 
@@ -45,8 +46,9 @@
          (vec (filter #(not (nil? %)) (map decoder line)))) 
        lines))
 
-(def outcome-score
-  (let [parsed-lines (-> input-lines parse-lines)]
+(defn outcome-score
+  [lines]
+  (let [parsed-lines (-> lines parse-lines)]
     (+
      (->> parsed-lines (map outcomes) (apply +))
      (apply + (map #(shape-score (second %)) parsed-lines)))))
@@ -68,6 +70,7 @@
   [round]
   (+ (outcomes round) (shape-score (second round))))
 
-(def answer2
-  (->> input-lines (map decoder2) (map round-score) (apply +))
+(defn answer2
+  [lines]
+  (->> lines (map decoder2) (map round-score) (apply +))
 )
