@@ -24,8 +24,9 @@ def _get_solution_year_and_number(f):
     
     return year, problem
 
-def open_input(f=sys.argv[0]):
+def open_input(f=sys.argv[0], filename='input.txt'):
     """Extract year and day numbers from an AoC solution filename and opens the file.
+    Filename is the name of the input file in the resources directory structure to open.
     Expected format: solution2024_1.py or similar
     Returns: open input file
     """
@@ -35,7 +36,7 @@ def open_input(f=sys.argv[0]):
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(f)))
     
     # Construct input file path
-    input_path = os.path.join(project_root, 'resources', str(year), str(problem), 'input.txt')
+    input_path = os.path.join(project_root, 'resources', str(year), str(problem), filename)
     
     # Ensure directory exists
     os.makedirs(os.path.dirname(input_path), exist_ok=True)
