@@ -186,6 +186,9 @@ def main():
     print(f"Checksum pt 2:\t{checksum(compacted_pt2)}")
 
 if __name__ == "__main__":
+
+    # main()
+    
     import timeit
     num = 10
     result_pt1 = timeit.timeit("compact(g_disk)", globals=locals(), setup="benchmark_setup()", number=num)
@@ -193,4 +196,5 @@ if __name__ == "__main__":
     result_pt2 = timeit.timeit("compact_pt2(g_disk)", globals=locals(), setup="benchmark_setup()", number=num)
     print(f"pt 2 avg time to compact: {result_pt2 / num * 1000:.2f} ms")
 
-    # main()
+    # pt 1 avg time to compact: 10.481464999975287 ms
+    # pt 2 avg time to compact: 52741.53534489997 ms
